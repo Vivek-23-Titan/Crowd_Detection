@@ -104,6 +104,7 @@ def get_boxed_img(image, h_map, w_map, gt_pred_map, prediction_downscale, BOXES,
     H, W = boxed_img.shape[:2]
 
     Y, X = head_idx[-2] , head_idx[-1]
+    index = 0
     for y, x in zip(Y, X):
 
         h, w = h_map[y, x]*prediction_downscale, w_map[y, x]*prediction_downscale
@@ -118,4 +119,5 @@ def get_boxed_img(image, h_map, w_map, gt_pred_map, prediction_downscale, BOXES,
             t = thickness
         cv2.rectangle(boxed_img, (max(int(prediction_downscale * x - w / 2), 0), max(int(prediction_downscale * y - h / 2), 0)),
                       (min(int(prediction_downscale * x + w - w / 2), W), min(int(prediction_downscale * y + h - h / 2), H)), selected_colour, t)
-    return boxed_img#.transpose((2, 0, 1))
+        index += 1
+    return index,boxed_img#.transpose((2, 0, 1))
